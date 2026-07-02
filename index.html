@@ -360,6 +360,21 @@
         alert('Nie udało się wczytać pliku ' + GEOJSON_FILE);
       });
 
+    fetch('border.geojson')
+      .then(response => response.json())
+      .then(data => {
+        L.geoJSON(data, {
+          style: {
+            color: '#1b5e20',
+            weight: 4,
+            fillOpacity: 0
+          }
+        }).addTo(map);
+      })
+      .catch(error => {
+        console.error('Nie udało się wczytać border.geojson:', error);
+      });
+
     const legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = function () {
@@ -375,6 +390,11 @@
         <div class="legend-item">
           <span class="box legend-hatch"></span>
           USTALONE PRZEZ ND
+        </div>
+
+        <div class="legend-item">
+          <span class="box" style="border:3px solid #1b5e20; background:transparent"></span>
+          GRANICA NADLEŚNICTWA DOJLIDY
         </div>
       `;
       return div;
